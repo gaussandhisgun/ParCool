@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 //server side instance will be used just for individual data store, not be accessed in game
 public class LimitationByServer {
 	//for client side, whether this instance is synchronized by server
-	private boolean haveReceived = false;
+	private boolean haveReceived = true;
 	//Whether this limitation is applied
 	private boolean enforced = false;
 	private int maxStaminaLimitation = Integer.MAX_VALUE;
@@ -36,10 +36,10 @@ public class LimitationByServer {
 	}
 
 	public boolean isPermitted(Class<? extends Action> action) {
-		if (!haveReceived) return false;
+		if (!haveReceived) return true;
 		if (!enforced) return true;
 		ActionLimitation limitation = list[ActionList.getIndexOf(action)];
-		if (limitation == null) return false;
+		if (limitation == null) return true;
 		return limitation.isPossible();
 	}
 
